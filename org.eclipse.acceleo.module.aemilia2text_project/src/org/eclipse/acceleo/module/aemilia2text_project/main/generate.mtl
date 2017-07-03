@@ -1,0 +1,293 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ */]
+[module generate('http://mmaemilia.ecore')]
+
+
+[**
+ * The documentation of the template generateElement.
+ * @param anAEmiliaSpecification
+ */]
+
+[template public generateElement(anAEmiliaSpecification : AEmiliaSpecification) post(trim())]
+[comment @main/]
+[file ('out.aem', false, 'UTF-8')]
+ARCHI_TYPE [anAEmiliaSpecification.eContents()->collect(self.archiTypeDecl.atName)/](
+		   [for (elem: ConstInit | self.archiTypeDecl.header.initConst)]
+		   [if (elem = anAEmiliaSpecification.archiTypeDecl.header.initConst->last())]
+		   const [generateData(elem.initConstData).trim()/] [elem.name.trim()/] := [check_condition_type(elem.initConstExpr).trim()/])	
+		   [else]
+		   const [generateData(elem.initConstData).trim()/] [elem.name.trim()/] := [check_condition_type(elem.initConstExpr).trim()/],	
+		   [/if]
+		   [/for]	
+			
+
+ARCHI_ELEM_TYPES
+
+		   [for (elem: ElemType | anAEmiliaSpecification.eContents()->collect(self.archiTypeDecl.aetDeclaration.etDeclaration))]
+    ELEM_TYPE [elem.etName/]([if (elem.elemHeader.costant->size() > 0)][for (e: Const | elem.elemHeader.costant)][if (e = elem.elemHeader.costant->last())]const [generateData(e.constantData).trim()/] [e.name.trim()/][else]const [generateData(e.constantData).trim()/] [e.name.trim()/],[/if][/for][else]void[/if])
+	
+		BEHAVIOR 
+					
+			[for (current_par: BehavEquation | elem.behaviorDecl.equations)]
+			[let first_behav: BehavEquation = elem.behaviorDecl.equations->first()][current_par.name/]([if (current_par.bHeader.left->size() > 0 and current_par = first_behav)][for (current: VarInit | current_par.bHeader.left.initVar)][if (current = current_par.bHeader.left.initVar->last())][generateData(current.initVarType).trim()/] [current.name/] := [check_condition_type(current.initVarExpr).trim()/][else][generateData(current.initVarType).trim()/] [current.name/] := [check_condition_type(current.initVarExpr).trim()/],[/if][/for][elseif (current_par.bHeader.left->size() > 0 and current_par <> first_behav)][for (current: VarInit | current_par.bHeader.left.initVar)][if (current = current_par.bHeader.left.initVar->last())][generateData(current.initVarType).trim()/] [current.name/]/][else][generateData(current.initVarType).trim()/] [current.name/],[/if][/for]][else] void[/if];[if (current_par.bHeader.right->size() > 0)][for (current: Local | current_par.bHeader.right.localDef)][if (current = current_par.bHeader.right.localDef->last())] local [generateData(current.localType).trim()/] [current.name/][else] local [generateData(current.localType).trim()/] [current.name/],[/if][/for][else] void[/if])[/let] = 
+				[check_process_term(current_par.pt)/]
+			[/for]	
+
+		INPUT_INTERACTIONS	
+					
+			[if (self.iiDecl->size() > 0)]
+			[let list_uni : OrderedSet(InputInteraction) = self.iiDecl->select(e|e.type=InteractionType::UNI)]
+			[for (current_inp:InputInteraction | list_uni)]
+			[if (current_inp = list_uni->first() and list_uni->size() > 1)]
+			[current_inp.type/] [current_inp.intName.trim()/];
+			[elseif (current_inp = list_uni->first() and list_uni->size() <= 1)]
+			[current_inp.type/] [current_inp.intName.trim()/]
+			[elseif (current_inp = list_uni->last())]
+			[current_inp.intName.trim()/]
+			[else]
+			[current_inp.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[let list_and : OrderedSet(InputInteraction) = self.iiDecl->select(e|e.type=InteractionType::AND)]
+			[for (current_inp_and:InputInteraction | list_and)]
+			[if (current_inp_and = list_and->first() and list_and->size() > 1)]
+			[current_inp_and.type/] [current_inp_and.intName.trim()/];
+			[elseif (current_inp_and = list_and->first() and list_and->size() <= 1)]
+			[current_inp_and.type/] [current_inp_and.intName.trim()/]
+			[elseif (current_inp_and = list_and->last())]
+			[current_inp_and.intName.trim()/]
+			[else]
+			[current_inp_and.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[let list_or : OrderedSet(InputInteraction) = self.iiDecl->select(e|e.type=InteractionType::OR)]
+			[for (current_inp:InputInteraction | list_or)]
+			[if (current_inp = list_or->first() and list_or->size() > 1)]
+			[current_inp.type/] [current_inp.intName.trim()/];
+			[elseif (current_inp = list_or->first() and list_or->size() <= 1)]
+			[current_inp.type/] [current_inp.intName.trim()/]
+			[elseif (current_inp = list_or->last())]
+			[current_inp.intName.trim()/]
+			[else]
+			[current_inp.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[/if]
+
+		OUTPUT_INTERACTIONS
+					
+			[if (self.oiDecl->size() > 0)]
+			[let list_uni_out : OrderedSet(OutputInteraction) = self.oiDecl->select(e|e.type=InteractionType::UNI)]
+			[for (current_inp:OutputInteraction | list_uni_out)]
+			[if (current_inp = list_uni_out->first() and list_uni_out->size() > 1)]
+			[current_inp.type/] [current_inp.intName.trim()/];
+			[elseif (current_inp = list_uni_out->first() and list_uni_out->size() <= 1)]
+			[current_inp.type/] [current_inp.intName.trim()/]
+			[elseif (current_inp = list_uni_out->last())]
+			[current_inp.intName.trim()/]
+			[else]
+			[current_inp.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[let list_and_out : OrderedSet(OutputInteraction) = self.oiDecl->select(e|e.type=InteractionType::AND)]
+			[for (current_inp_and:OutputInteraction | list_and_out)]
+			[if (current_inp_and = list_and_out->first() and list_and_out->size() > 1)]
+			[current_inp_and.type/] [current_inp_and.intName.trim()/];
+			[elseif (current_inp_and = list_and_out->first() and list_and_out->size() <= 1)]
+			[current_inp_and.type/] [current_inp_and.intName.trim()/]
+			[elseif (current_inp_and = list_and_out->last())]
+			[current_inp_and.intName.trim()/]
+			[else]
+			[current_inp_and.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[let list_or_out : OrderedSet(OutputInteraction) = self.oiDecl->select(e|e.type=InteractionType::OR)]
+			[for (current_inp:OutputInteraction | list_or_out)]
+			[if (current_inp = list_or_out->first() and list_or_out->size() > 1)]
+			[current_inp.type/] [current_inp.intName.trim()/];
+			[elseif (current_inp = list_or_out->first() and list_or_out->size() <= 1)]
+			[current_inp.type/] [current_inp.intName.trim()/]
+			[elseif (current_inp = list_or_out->last())]
+			[current_inp.intName.trim()/]
+			[else]
+			[current_inp.intName.trim()/];
+			[/if]
+			[/for]
+			[/let]
+			[/if]
+
+					[/for]			
+				
+
+ARCHI_TOPOLOGY
+				
+           ARCHI_ELEM_INSTANCES
+					[let last_elem: ArchiElemInstance = self.archiTypeDecl.atDeclaration.aeiDecl->last()][for (elem: ArchiElemInstance | self.archiTypeDecl.atDeclaration.aeiDecl) separator('\n                    ')][if (elem = last_elem)][elem.instanceName/] : [elem.TypeOf.etName/]([let last_actual: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual)] [param/][else] [param/],[/if][/for][/let])[else][elem.instanceName/] : [elem.TypeOf.etName/]([if (elem.actualParam->size() > 0)][let last_actual_bis: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual_bis)] [param/][else] [param/],[/if][/for][/let]);[else]);[/if][/if][/for][/let]
+				   
+		   ARCHI_INTERACTIONS	
+					[if (self.archiTypeDecl.atDeclaration.aiDecl->size() > 0)]
+					[let last_instance: ArchitecturalInteraction = self.archiTypeDecl.atDeclaration.aiDecl->last()]
+					[for (instance: ArchitecturalInteraction | self.archiTypeDecl.atDeclaration.aiDecl)]
+					[if (instance = last_instance)]
+					[instance.name/]
+					[else]
+					[instance.name/];
+					[/if]
+					[/for]
+					[/let]
+					[/if]
+
+		   ARCHI_ATTACHMENTS
+					[if (self.archiTypeDecl.atDeclaration.attDecl->size() > 0)]
+					[let last_att: Attachment = self.archiTypeDecl.atDeclaration.attDecl->last()]
+					[for (instance: Attachment | self.archiTypeDecl.atDeclaration.attDecl)]
+					[if (instance = last_att)]
+					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/]
+					[else]
+					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/];
+					[/if]
+					[/for]
+					[/let]
+					[/if] 	
+				
+END
+
+[/file]
+[/template]
+
+[template public generateData(e : OclAny) post(trim())]
+[if e.oclIsTypeOf(DataType::Integer)]
+integer
+[elseif e.oclIsTypeOf(DataType::Special)]
+[e.oclAsType(Special).type/]
+[elseif e.oclIsTypeOf(DataType::RangeInt)]	
+[if (e.oclAsType(RangeInt).maxVar->notEmpty() and e.oclAsType(RangeInt).minVar->notEmpty())]
+integer([e.oclAsType(RangeInt).minVar.name/]..[e.oclAsType(RangeInt).maxVar.name/])
+[elseif e.oclAsType(RangeInt).maxVar->notEmpty() and e.oclAsType(RangeInt).minVar->isEmpty()]
+integer([e.oclAsType(RangeInt).minVal/]..[e.oclAsType(RangeInt).maxVar.name/])
+[elseif e.oclAsType(RangeInt).maxVar->isEmpty() and e.oclAsType(RangeInt).minVar->notEmpty()]
+integer([e.oclAsType(RangeInt).minVar.name/]..[e.oclAsType(RangeInt).maxVal/])
+[elseif (e.oclAsType(RangeInt).maxVar->isEmpty() and e.oclAsType(RangeInt).minVar->isEmpty())]
+integer([e.oclAsType(RangeInt).minVal/]..[e.oclAsType(RangeInt).maxVal/])
+[/if]
+[elseif e.oclIsTypeOf(DataType::Boolean)]
+boolean
+[elseif e.oclIsTypeOf(DataType::Real)]
+real
+[elseif e.oclIsTypeOf(DataType::List)]
+(
+list [generateData(e.oclAsType(List).listElemType->first()).trim()/]
+) 
+[elseif e.oclIsTypeOf(DataType::Record)]
+[let last:String = e.oclAsType(Record).field_decl_seq->last()]
+record
+[for (elem : String | e.oclAsType(Record).field_decl_seq)]
+[if (elem = last)]
+[elem/]
+[else]
+[elem/],
+[/if]
+[/for]
+[/let]
+[elseif e.oclIsTypeOf(DataType::Array)]
+array
+[let last:Normal = e.oclAsType(Array).arrayElemType->last()]
+record
+[for (elem : Normal | e.oclAsType(Array).arrayElemType)]
+[if (elem = last)]
+[generateData(elem).trim()/]
+[else]
+[generateData(elem).trim()/],
+[/if]
+[/for]
+[/let]
+[e.oclAsType(Array).arrayElemType/]
+[/if]
+[comment rivedere in futuro i tipi di dato Array, Lista e Record (mai usati e quindi in dubbio)/]
+[/template]
+
+[comment serve a controllare il tipo di process_term e reagire di conseguenza/]
+[template public check_process_term(e : OclAny) post(trim())]
+[if (e.oclIsTypeOf(Stop))]
+stop
+[elseif (e.oclIsTypeOf(ActionProcess))]
+<[e.oclAsType(ActionProcess).act.name/], [check_rate(e.oclAsType(ActionProcess).act.rate)/]> . [check_process_term(e.oclAsType(ActionProcess).process)/]
+[elseif (e.oclIsTypeOf(BehavProcess))]
+[e.oclAsType(BehavProcess).eqCall.name/]([if (e.oclAsType(BehavProcess).exprs->size() > 0)][let last_expr : Expression = e.oclAsType(BehavProcess).exprs->last()][for (expression: Expression | e.oclAsType(BehavProcess).exprs)][if (expression = last_expr)][check_condition_type(expression)/][else][check_condition_type(expression)/],[/if][/for][/let][else][if (e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->size() > 0)][let last_par:VarInit = e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->last()][for (par : VarInit | e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar)][if (par = last_par)][par.name/][else][par.name/],[/if][/for][/let][else][/if][/if]) 
+[elseif (e.oclIsTypeOf(ChoiceProcess))]
+choice
+{
+[let last_cond : ProcessTerm = e.oclAsType(ChoiceProcess).processes->last()]
+[for (elem: ProcessTerm | e.oclAsType(ChoiceProcess).processes)]
+[if elem.condition.oclIsUndefined()]
+[if elem = last_cond]
+[check_process_term(elem)/]
+[else]
+[check_process_term(elem)/],
+[/if]	
+[else]
+[if (elem = last_cond and check_condition_type(elem.condition)->notEmpty())]
+	cond([check_condition_type(elem.condition).trim()/]) ->		[check_process_term(elem)/]		
+[elseif elem <> last_cond and check_condition_type(elem.condition)->notEmpty()]
+	cond([check_condition_type(elem.condition).trim()/]) ->		[check_process_term(elem)/],
+[/if]
+[/if]
+[/for] 
+[/let]
+} 
+[/if]
+[/template]
+
+[template public check_rate(e : OclAny) post(trim())]
+[if e.oclIsTypeOf(RateExp)]
+exp([check_condition_type(e.oclAsType(RateExp).expr)/])
+[elseif e.oclIsTypeOf(RateInf)]
+[if (e.oclAsType(RateInf).inf_priority.oclIsUndefined() or e.oclAsType(RateInf).inf_weight.oclIsUndefined())]
+inf
+[else]
+inf ([check_condition_type(e.oclAsType(RateInf).inf_priority)/], [check_condition_type(e.oclAsType(RateInf).inf_weight)/])
+[/if]
+[elseif e.oclIsTypeOf(RatePas)]
+[if (e.oclAsType(RatePas).priority.oclIsUndefined() or e.oclAsType(RatePas).weight.oclIsUndefined())]
+_
+[else]
+_ ([check_condition_type(e.oclAsType(RatePas).priority)/], [check_condition_type(e.oclAsType(RatePas).weight)/])
+[/if]
+[/if]
+[/template]
+
+[template public check_condition_type(e : OclAny) post(trim())]
+[if e.oclIsTypeOf(RelationalExpr)]
+[check_condition_type(e.oclAsType(RelationalExpr).leftExprRel).trim()/] [e.oclAsType(RelationalExpr).operator/] [check_condition_type(e.oclAsType(RelationalExpr).rightExprRel).trim()/]
+[elseif e.oclIsTypeOf(ArithExpr)]
+[check_condition_type(e.oclAsType(ArithExpr).leftExprArith).trim()/] [e.oclAsType(ArithExpr).operator/] [check_condition_type(e.oclAsType(ArithExpr).rightExprArith).trim()/]
+[elseif e.oclIsTypeOf(BooleanExpr)]
+[check_condition_type(e.oclAsType(BooleanExpr).leftExprBool).trim()/] [e.oclAsType(BooleanExpr).operator/] [check_condition_type(e.oclAsType(BooleanExpr).rightExprBool).trim()/]
+[elseif e.oclIsTypeOf(IdentExpr)]
+[e.oclAsType(IdentExpr).name/]
+[comment Gestire altri tipi di espressioni per condition... /] 
+[else]
+in gestione
+[/if]
+[/template]
+
+[template public check_action_type(e : OclAny) post(trim())]
+[if e.oclIsTypeOf(RelationalExpr)]
+[check_condition_type(e.oclAsType(RelationalExpr).leftExprRel).trim()/] [e.oclAsType(RelationalExpr).operator/] [check_condition_type(e.oclAsType(RelationalExpr).rightExprRel).trim()/]
+[elseif e.oclIsTypeOf(ArithExpr)]
+[check_condition_type(e.oclAsType(ArithExpr).leftExprArith).trim()/] [e.oclAsType(ArithExpr).operator/] [check_condition_type(e.oclAsType(ArithExpr).rightExprArith).trim()/]
+[elseif e.oclIsTypeOf(BooleanExpr)]
+[check_condition_type(e.oclAsType(BooleanExpr).leftExprBool).trim()/] [e.oclAsType(BooleanExpr).operator/] [check_condition_type(e.oclAsType(BooleanExpr).rightExprBool).trim()/]
+[comment Gestire altri tipi di espressioni per condition... /] 
+[else]
+in gestione
+[/if]
+[/template]
+

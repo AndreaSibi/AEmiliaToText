@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mmAEmilia -->
+      <package
+            uri="http://mmaemilia.ecore"
+            class="mmaemilia.MmaemiliaPackage"
+            genModel="model/mmAEmilia.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mmAEmilia -->
+      <package
+            uri="http://datatype.ecore"
+            class="mmaemilia.DataType.DataTypePackage"
+            genModel="model/mmAEmilia.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mmAEmilia -->
+      <package
+            uri="http://expressions.ecore"
+            class="mmaemilia.Expressions.ExpressionsPackage"
+            genModel="model/mmAEmilia.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mmAEmilia -->
+      <package
+            uri="http://headers.ecore"
+            class="mmaemilia.Headers.HeadersPackage"
+            genModel="model/mmAEmilia.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mmAEmilia -->
+      <package
+            uri="http://behavior.ecore"
+            class="mmaemilia.Behavior.BehaviorPackage"
+            genModel="model/mmAEmilia.genmodel"/>
+   </extension>
+
+</plugin>
