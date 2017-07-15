@@ -18,10 +18,7 @@
               </process>
               <act name="elapse_tick" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
                 <type/>
-                <rate xsi:type="Behavior:RateInf">
-                  <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                  <inf_weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                </rate>
+                <rate xsi:type="Behavior:RateInf"/>
                 <is xsi:type="mmaemilia:OutputInteraction" intName="elapse_tick" type="AND"/>
               </act>
             </pt>
@@ -50,7 +47,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="cached_samples"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -60,6 +57,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="cached_samples"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -69,10 +70,7 @@
                 </process>
                 <act name="acquire_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                 </act>
               </processes>
@@ -93,19 +91,13 @@
                       </process>
                       <act name="acquire_feedback" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
                         <type/>
-                        <rate xsi:type="Behavior:RatePas">
-                          <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                          <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                        </rate>
+                        <rate xsi:type="Behavior:RatePas"/>
                         <is xsi:type="mmaemilia:InputInteraction" intName="acquire_feedback"/>
                       </act>
                     </process>
                     <act name="send_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
                       <type/>
-                      <rate xsi:type="Behavior:RateInf">
-                        <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                        <inf_weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                      </rate>
+                      <rate xsi:type="Behavior:RateInf"/>
                       <is xsi:type="mmaemilia:OutputInteraction" intName="send_sample"/>
                     </act>
                   </process>
@@ -119,10 +111,7 @@
                 </process>
                 <act name="acquire_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                 </act>
               </processes>
@@ -148,7 +137,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -158,6 +147,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.2/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -167,10 +160,7 @@
                 </process>
                 <act name="receive" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.2">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                 </act>
               </processes>
@@ -216,7 +206,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -226,6 +216,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.3/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -235,10 +229,7 @@
                 </process>
                 <act name="receive" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.3">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                 </act>
               </processes>
@@ -291,37 +282,25 @@
                     </process>
                     <act name="send_feedback" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.4">
                       <type/>
-                      <rate xsi:type="Behavior:RateInf">
-                        <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                        <inf_weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                      </rate>
+                      <rate xsi:type="Behavior:RateInf"/>
                       <is xsi:type="mmaemilia:OutputInteraction" intName="send_feedback"/>
                     </act>
                   </process>
                   <act name="acquire_feedback" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.4">
                     <type/>
-                    <rate xsi:type="Behavior:RatePas">
-                      <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                    </rate>
+                    <rate xsi:type="Behavior:RatePas"/>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_feedback"/>
                   </act>
                 </process>
                 <act name="send_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.4">
                   <type/>
-                  <rate xsi:type="Behavior:RateInf">
-                    <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <inf_weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RateInf"/>
                   <is xsi:type="mmaemilia:OutputInteraction" intName="send_sample"/>
                 </act>
               </process>
               <act name="acquire_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.4">
                 <type/>
-                <rate xsi:type="Behavior:RatePas">
-                  <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                  <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                </rate>
+                <rate xsi:type="Behavior:RatePas"/>
                 <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
               </act>
             </pt>
@@ -346,7 +325,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -356,6 +335,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.5/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -365,10 +348,7 @@
                 </process>
                 <act name="receive" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.5">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                 </act>
               </processes>
@@ -414,7 +394,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -424,6 +404,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.6/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -433,10 +417,7 @@
                 </process>
                 <act name="receive" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.6">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                 </act>
               </processes>
@@ -482,7 +463,7 @@
                 <initVar name="item_num">
                   <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   <initVarType xsi:type="DataType:RangeInt">
-                    <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <maxVal xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
                     <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </initVarType>
                 </initVar>
@@ -492,6 +473,10 @@
             <pt xsi:type="Behavior:ChoiceProcess">
               <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
               <processes xsi:type="Behavior:ActionProcess">
+                <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                  <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                  <rightExprRel xsi:type="Expressions:IdentExpr" name="simultaneous_notifications"/>
+                </condition>
                 <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.7/@behaviorDecl/@equations.0">
                   <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                   <exprs xsi:type="Expressions:ArithExpr">
@@ -501,10 +486,7 @@
                 </process>
                 <act name="acquire_sample" belongs="//@archiTypeDecl/@aetDeclaration/@etDeclaration.7">
                   <type/>
-                  <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1.0" type="NUMERIC_CONST"/>
-                  </rate>
+                  <rate xsi:type="Behavior:RatePas"/>
                   <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                 </act>
               </processes>
@@ -550,8 +532,8 @@
                 <act name="elapse_tick" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.0/@elem">
                   <type/>
                   <rate xsi:type="Behavior:RateInf">
-                    <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <inf_weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                    <inf_priority xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <inf_weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </rate>
                   <is xsi:type="mmaemilia:OutputInteraction" intName="elapse_tick" type="AND"/>
                 </act>
@@ -572,7 +554,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="150" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -582,6 +564,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="150" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -593,7 +579,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                   </act>
@@ -617,7 +603,7 @@
                           <type/>
                           <rate xsi:type="Behavior:RatePas">
                             <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                            <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                            <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                           </rate>
                           <is xsi:type="mmaemilia:InputInteraction" intName="acquire_feedback"/>
                         </act>
@@ -626,7 +612,7 @@
                         <type/>
                         <rate xsi:type="Behavior:RateInf">
                           <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                          <inf_weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                          <inf_weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                         </rate>
                         <is xsi:type="mmaemilia:OutputInteraction" intName="send_sample"/>
                       </act>
@@ -643,7 +629,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                   </act>
@@ -666,7 +652,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="150" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -676,6 +662,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="150" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -687,7 +677,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                   </act>
@@ -711,7 +701,7 @@
                           <type/>
                           <rate xsi:type="Behavior:RatePas">
                             <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                            <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                            <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                           </rate>
                           <is xsi:type="mmaemilia:InputInteraction" intName="acquire_feedback"/>
                         </act>
@@ -720,7 +710,7 @@
                         <type/>
                         <rate xsi:type="Behavior:RateInf">
                           <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                          <inf_weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                          <inf_weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                         </rate>
                         <is xsi:type="mmaemilia:OutputInteraction" intName="send_sample"/>
                       </act>
@@ -737,7 +727,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                   </act>
@@ -771,7 +761,7 @@
                         <type/>
                         <rate xsi:type="Behavior:RateInf">
                           <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                          <inf_weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                          <inf_weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                         </rate>
                         <is xsi:type="mmaemilia:OutputInteraction" intName="send_feedback"/>
                       </act>
@@ -780,7 +770,7 @@
                       <type/>
                       <rate xsi:type="Behavior:RatePas">
                         <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                        <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                        <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                       </rate>
                       <is xsi:type="mmaemilia:InputInteraction" intName="acquire_feedback"/>
                     </act>
@@ -789,7 +779,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RateInf">
                       <inf_priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <inf_weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <inf_weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="send_sample"/>
                   </act>
@@ -797,8 +787,8 @@
                 <act name="acquire_sample" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.3/@elem">
                   <type/>
                   <rate xsi:type="Behavior:RatePas">
-                    <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                    <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                    <priority xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                    <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                   </rate>
                   <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                 </act>
@@ -809,7 +799,7 @@
       </aeiDecl>
       <aeiDecl instanceName="WP" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.7">
         <actualParam>1</actualParam>
-        <actualParam>8000000.0</actualParam>
+        <actualParam>disk_store_rate</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="StoreData">
@@ -818,7 +808,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -828,6 +818,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.7/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -839,7 +833,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="acquire_sample"/>
                   </act>
@@ -859,7 +853,7 @@
                   <act name="send_feedback" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.4/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="8000000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="8000000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="send_feedback"/>
                   </act>
@@ -870,8 +864,8 @@
         </elem>
       </aeiDecl>
       <aeiDecl instanceName="TR" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.3">
-        <actualParam>2</actualParam>
-        <actualParam>31.25</actualParam>
+        <actualParam>simultaneous_notifications</actualParam>
+        <actualParam>transfer_rate_lvl_1_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="TransferData">
@@ -880,7 +874,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -890,6 +884,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.3/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -901,7 +899,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                   </act>
@@ -932,8 +930,8 @@
         </elem>
       </aeiDecl>
       <aeiDecl instanceName="RT" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.2">
-        <actualParam>2</actualParam>
-        <actualParam>31.25</actualParam>
+        <actualParam>simultaneous_notifications</actualParam>
+        <actualParam>transfer_rate_lvl_1_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="TransferData">
@@ -942,7 +940,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -952,6 +950,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.2/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -963,7 +965,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                   </act>
@@ -994,8 +996,8 @@
         </elem>
       </aeiDecl>
       <aeiDecl instanceName="WT" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.6">
-        <actualParam>2</actualParam>
-        <actualParam>12.04</actualParam>
+        <actualParam>simultaneous_notifications</actualParam>
+        <actualParam>transfer_rate_lvl_0_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="TransferData">
@@ -1004,7 +1006,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -1014,6 +1016,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.6/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -1025,7 +1031,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                   </act>
@@ -1056,8 +1062,8 @@
         </elem>
       </aeiDecl>
       <aeiDecl instanceName="TW" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.5">
-        <actualParam>2</actualParam>
-        <actualParam>12.04</actualParam>
+        <actualParam>simultaneous_notifications</actualParam>
+        <actualParam>transfer_rate_lvl_0_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="TransferData">
@@ -1066,7 +1072,7 @@
                   <initVar name="item_num">
                     <initVarExpr xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     <initVarType xsi:type="DataType:RangeInt">
-                      <maxVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
+                      <maxVal xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
                       <minVal xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </initVarType>
                   </initVar>
@@ -1076,6 +1082,10 @@
               <pt xsi:type="Behavior:ChoiceProcess">
                 <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                 <processes xsi:type="Behavior:ActionProcess">
+                  <condition xsi:type="Expressions:RelationalExpr" operator="&lt;">
+                    <leftExprRel xsi:type="Expressions:IdentExpr" name="item_num"/>
+                    <rightExprRel xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
+                  </condition>
                   <process xsi:type="Behavior:BehavProcess" eqCall="//@archiTypeDecl/@aetDeclaration/@etDeclaration.5/@behaviorDecl/@equations.0">
                     <condition xsi:type="Expressions:IdentExpr" name="true" type="TRUTH_VAL"/>
                     <exprs xsi:type="Expressions:ArithExpr">
@@ -1087,7 +1097,7 @@
                     <type/>
                     <rate xsi:type="Behavior:RatePas">
                       <priority xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
-                      <weight xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
+                      <weight xsi:type="Expressions:IdentExpr" name="0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:InputInteraction" intName="receive" type="OR"/>
                   </act>

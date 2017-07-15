@@ -82,14 +82,14 @@ ARCHI_ELEM_TYPES
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					FTA : FTA_Type( 5.0);
-                    NETH : NetHi_Type( 5.0);
+					FTA : FTA_Type( forward_rate);
+                    NETH : NetHi_Type( prop_rate);
                     MA : MobApp_Type();
-                    R : Robot_Type( 5.0, 0.2)
+                    R : Robot_Type( msg_gen_rate, stop_prob)
 
 		   ARCHI_INTERACTIONS	
-					getVideo;
-					sendVideo
+					MA.getVideo;
+					R.sendVideo
 
 		   ARCHI_ATTACHMENTS
 					FROM R.outR1 TO NETH.inNetH1;

@@ -37,7 +37,7 @@ ARCHI_ELEM_TYPES
 			TransferData(integer(0..buffer_size) item_num := 0; void) = 
 					choice
 					{
-					<receive, _> . TransferData(item_num + 1),
+						cond(item_num < buffer_size) ->		<receive, _> . TransferData(item_num + 1),
 						cond(item_num > 0) ->		<forward, exp(download_rate)> . TransferData(item_num - 1)		
 					}
 	
@@ -54,10 +54,10 @@ ARCHI_ELEM_TYPES
 		BEHAVIOR
  
 
-			TransferData(integer(0..0) item_num := 0; void) = 
+			TransferData(integer(0..buffer_size) item_num := 0; void) = 
 					choice
 					{
-					<receive, _> . TransferData(item_num + 1),
+						cond(item_num < buffer_size) ->		<receive, _> . TransferData(item_num + 1),
 						cond(item_num > 0) ->		<forward, exp(upload_rate)> . TransferData(item_num - 1)		
 					}
 	
@@ -74,10 +74,10 @@ ARCHI_ELEM_TYPES
 		BEHAVIOR
  
 
-			BalancerCalled(integer(0..0) item_num := 0; void) = 
+			BalancerCalled(integer(0..buffer_size) item_num := 0; void) = 
 					choice
 					{
-					<capture_req_best_path, _> . BalancerCalled(item_num + 1),
+						cond(item_num < buffer_size) ->		<capture_req_best_path, _> . BalancerCalled(item_num + 1),
 						cond(item_num > 0) ->		choice
 						{
 							<deliver_req_best_path_a, exp(balancer_rate_a)> . BalancerCalled(item_num - 1),
@@ -99,11 +99,11 @@ ARCHI_ELEM_TYPES
 		BEHAVIOR
  
 
-			Start(integer(0..0) item_num := 0,integer(0..0) item_num2 := 0; void) = 
+			Start(integer(0..buffer_size) item_num := 0,integer(0..buffer_size) item_num2 := 0; void) = 
 					choice
 					{
-					<receive_req_best_path, _> . Start(item_num + 1,item_num2),
-					<receive_data, _> . Start(item_num,item_num2 + 1),
+						cond(item_num < buffer_size) ->		<receive_req_best_path, _> . Start(item_num + 1,item_num2),
+						cond(item_num2 < buffer_size) ->		<receive_data, _> . Start(item_num,item_num2 + 1),
 						cond(item_num > 0) ->		<req_data, exp(server_req_rate)> . Start(item_num - 1,item_num2),
 						cond(item_num2 > 0) ->		<transmit_result_best_path, exp(server_result_rate)> . Start(item_num,item_num2 - 1)		
 					}
@@ -123,7 +123,7 @@ ARCHI_ELEM_TYPES
 		BEHAVIOR
  
 
-			FetchData(integer(0..0) item_num := 0; void) = 
+			FetchData(integer(0..buffer_size) item_num := 0; void) = 
 					<receive_data_req, _> . <transmit_data, exp(data_fetch_rate)> . FetchData(item_num)
 	
 		INPUT_INTERACTIONS	
@@ -139,31 +139,31 @@ ARCHI_ELEM_TYPES
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					MA : MA_Type();
-                    MA : MA_Type();
-                    MA : MA_Type();
-                    MA : MA_Type();
-                    MA : MA_Type();
-                    ND : NetDown_Type( 10, 2441.40625);
-                    NU : NetUp_Type( 10, 305.17578125);
-                    LB : Balancer_Type( 10, 2.0E7, 1.0E7);
-                    SA : Server_Type( 10, 7.0E7, 85995.0);
-                    SB : Server_Type( 10, 7.0E7, 85995.0);
-                    DB : DB_Type( 10, 36.585)
+					MA[1] : MA_Type();
+                    MA[2] : MA_Type();
+                    MA[3] : MA_Type();
+                    MA[4] : MA_Type();
+                    MA[5] : MA_Type();
+                    ND : NetDown_Type( buffer_size, download_rate);
+                    NU : NetUp_Type( buffer_size, upload_rate);
+                    LB : Balancer_Type( buffer_size, balancer_rate_a, balancer_rate_b);
+                    SA : Server_Type( buffer_size, server_req_rate, server_result_rate);
+                    SB : Server_Type( buffer_size, server_req_rate, server_result_rate);
+                    DB : DB_Type( buffer_size, data_fetch_rate)
 
 		   ARCHI_INTERACTIONS	
-					generate_best_path_req;
-					generate_best_path_req;
-					generate_best_path_req;
-					generate_best_path_req;
-					generate_best_path_req
+					MA[1].generate_best_path_req;
+					MA[2].generate_best_path_req;
+					MA[3].generate_best_path_req;
+					MA[4].generate_best_path_req;
+					MA[5].generate_best_path_req
 
 		   ARCHI_ATTACHMENTS
-					FROM MA.trasmit_req_best_path TO ND.receive;
-					FROM MA.trasmit_req_best_path TO ND.receive;
-					FROM MA.trasmit_req_best_path TO ND.receive;
-					FROM MA.trasmit_req_best_path TO ND.receive;
-					FROM MA.trasmit_req_best_path TO ND.receive;
+					FROM MA[1].trasmit_req_best_path TO ND.receive;
+					FROM MA[2].trasmit_req_best_path TO ND.receive;
+					FROM MA[3].trasmit_req_best_path TO ND.receive;
+					FROM MA[4].trasmit_req_best_path TO ND.receive;
+					FROM MA[5].trasmit_req_best_path TO ND.receive;
 					FROM ND.forward TO LB.capture_req_best_path;
 					FROM LB.deliver_req_best_path_a TO SA.receive_req_best_path;
 					FROM LB.deliver_req_best_path_b TO SB.receive_req_best_path;
@@ -173,11 +173,11 @@ ARCHI_TOPOLOGY
 					FROM DB.transmit_data TO SB.receive_data;
 					FROM SA.transmit_result_best_path TO NU.receive;
 					FROM SB.transmit_result_best_path TO NU.receive;
-					FROM NU.forward TO MA.receive_best_path;
-					FROM NU.forward TO MA.receive_best_path;
-					FROM NU.forward TO MA.receive_best_path;
-					FROM NU.forward TO MA.receive_best_path;
-					FROM NU.forward TO MA.receive_best_path
+					FROM NU.forward TO MA[1].receive_best_path;
+					FROM NU.forward TO MA[2].receive_best_path;
+					FROM NU.forward TO MA[3].receive_best_path;
+					FROM NU.forward TO MA[4].receive_best_path;
+					FROM NU.forward TO MA[5].receive_best_path
 				
 END
 

@@ -1,0 +1,194 @@
+ARCHI_TYPE fta(
+		   const integer wsn_num := 10,	
+		   const integer app_num := 10,	
+		   const rate wsn_net := 20000,	
+		   const rate analyze_rate := 100000,	
+		   const rate refine_rate := 200000,	
+		   const rate deliver_sensed_data_rate := 80000,	
+		   const rate broadcast_rate := 80000,	
+		   const rate store_db := 100000,	
+		   const weight alarm_prob := 0.1)	
+			
+
+ARCHI_ELEM_TYPES
+
+    ELEM_TYPE WSN_Type(const rate wsn_net)
+	
+		BEHAVIOR
+ 
+
+			WSN( void; void) = 
+					<generate_sensed_data, inf> . <transmit_sensed_data, exp(wsn_net)> . WSN()
+	
+		INPUT_INTERACTIONS	
+					
+			UNI generate_sensed_data
+
+		OUTPUT_INTERACTIONS
+					
+			UNI transmit_sensed_data
+
+    ELEM_TYPE Gateway_Receiver_Type(const rate deliver_sensed_data_rate)
+	
+		BEHAVIOR
+ 
+
+			Gateway( void; void) = 
+					<receive_sensed_data, _> . <deliver_sensed_data, exp(deliver_sensed_data_rate)> . Gateway()
+	
+		INPUT_INTERACTIONS	
+					
+			OR receive_sensed_data
+
+		OUTPUT_INTERACTIONS
+					
+			UNI deliver_sensed_data
+
+    ELEM_TYPE Gateway_Sender_Type(const rate broadcast_rate)
+	
+		BEHAVIOR
+ 
+
+			Gateway( void; void) = 
+					<receive_refined_data, _> . <deliver_refined_data, exp(broadcast_rate)> . Gateway()
+	
+		INPUT_INTERACTIONS	
+					
+			UNI receive_refined_data
+
+		OUTPUT_INTERACTIONS
+					
+			AND deliver_refined_data
+
+    ELEM_TYPE Core_Type(const weight alarm_prob,const rate analyze_rate,const rate refine_rate)
+	
+		BEHAVIOR
+ 
+
+			Core( void; void) = 
+					<receive_sensed_data, _> . choice
+					{
+						<normal_status, inf (1, 1 - alarm_prob)> . <analyze_sensed_data, exp(analyze_rate)> . <transmit_sensed_data, inf> . Core(),
+						<alarm_status, inf (1, alarm_prob)> . <refine_sensed_data, exp(refine_rate)> . <transmit_refined_data, inf> . Core()		
+					}
+	
+		INPUT_INTERACTIONS	
+					
+			UNI receive_sensed_data
+
+		OUTPUT_INTERACTIONS
+					
+			UNI transmit_sensed_data;
+			transmit_refined_data
+
+    ELEM_TYPE Rel_DB_Type(const rate store_db)
+	
+		BEHAVIOR
+ 
+
+			DB( void; void) = 
+					<receive_sensed_data, _> . <store, exp(store_db)> . DB()
+	
+		INPUT_INTERACTIONS	
+					
+			UNI receive_sensed_data
+
+		OUTPUT_INTERACTIONS
+					
+			void
+
+    ELEM_TYPE Mobile_App_Type(void)
+	
+		BEHAVIOR
+ 
+
+			App( void; void) = 
+					<receive_refined_data, _> . <consume_refined_data, inf> . App()
+	
+		INPUT_INTERACTIONS	
+					
+			UNI receive_refined_data
+
+		OUTPUT_INTERACTIONS
+					
+			UNI consume_refined_data
+
+				
+
+ARCHI_TOPOLOGY
+				
+           ARCHI_ELEM_INSTANCES
+					WSN[1] : WSN_Type( 20000.0);
+                    WSN[2] : WSN_Type( 20000.0);
+                    WSN[3] : WSN_Type( 20000.0);
+                    WSN[4] : WSN_Type( 20000.0);
+                    WSN[5] : WSN_Type( 20000.0);
+                    WSN[6] : WSN_Type( 20000.0);
+                    WSN[7] : WSN_Type( 20000.0);
+                    WSN[8] : WSN_Type( 20000.0);
+                    WSN[9] : WSN_Type( 20000.0);
+                    WSN[10] : WSN_Type( 20000.0);
+                    App[1] : Mobile_App_Type();
+                    App[2] : Mobile_App_Type();
+                    App[3] : Mobile_App_Type();
+                    App[4] : Mobile_App_Type();
+                    App[5] : Mobile_App_Type();
+                    App[6] : Mobile_App_Type();
+                    App[7] : Mobile_App_Type();
+                    App[8] : Mobile_App_Type();
+                    App[9] : Mobile_App_Type();
+                    App[10] : Mobile_App_Type();
+                    GR : Gateway_Receiver_Type( deliver_sensed_data_rate);
+                    GS : Gateway_Sender_Type( broadcast_rate);
+                    Core : Core_Type( alarm_prob, analyze_rate, refine_rate);
+                    RDB : Rel_DB_Type( store_db)
+
+		   ARCHI_INTERACTIONS	
+					WSN[1].generate_sensed_data;
+					WSN[2].generate_sensed_data;
+					WSN[3].generate_sensed_data;
+					WSN[4].generate_sensed_data;
+					WSN[5].generate_sensed_data;
+					WSN[6].generate_sensed_data;
+					WSN[7].generate_sensed_data;
+					WSN[8].generate_sensed_data;
+					WSN[9].generate_sensed_data;
+					WSN[10].generate_sensed_data;
+					App[1].consume_refined_data;
+					App[2].consume_refined_data;
+					App[3].consume_refined_data;
+					App[4].consume_refined_data;
+					App[5].consume_refined_data;
+					App[6].consume_refined_data;
+					App[7].consume_refined_data;
+					App[8].consume_refined_data;
+					App[9].consume_refined_data;
+					App[10].consume_refined_data
+
+		   ARCHI_ATTACHMENTS
+					FROM WSN[1].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[2].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[3].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[4].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[5].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[6].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[7].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[8].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[9].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM WSN[10].transmit_sensed_data TO GR.receive_sensed_data;
+					FROM GR.deliver_sensed_data TO Core.receive_sensed_data;
+					FROM Core.transmit_sensed_data TO RDB.receive_sensed_data;
+					FROM Core.transmit_refined_data TO GS.receive_refined_data;
+					FROM GS.deliver_refined_data TO App[1].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[2].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[3].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[4].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[5].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[6].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[7].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[8].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[9].receive_refined_data;
+					FROM GS.deliver_refined_data TO App[10].receive_refined_data
+				
+END
+

@@ -138,7 +138,7 @@ ARCHI_ELEM_TYPES
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					[if (not(self.archiTypeDecl.atDeclaration.aeiDecl->oclIsUndefined()))][let last_elem: ArchiElemInstance = self.archiTypeDecl.atDeclaration.aeiDecl->last()][for (elem: ArchiElemInstance | self.archiTypeDecl.atDeclaration.aeiDecl) separator('\n                    ')][if (elem = last_elem)][elem.instanceName/] : [elem.TypeOf.etName/]([if (elem.actualParam->notEmpty())][let last_actual: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual)] [param/][else] [param/],[/if][/for][/let][/if])[else][elem.instanceName/] : [elem.TypeOf.etName/]([if (elem.actualParam->size() > 0)][let last_actual_bis: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual_bis)] [param/][else] [param/],[/if][/for][/let]);[else]);[/if][/if][/for][/let][/if]
+					[if (not(self.archiTypeDecl.atDeclaration.aeiDecl->oclIsUndefined()))][let last_elem: ArchiElemInstance = self.archiTypeDecl.atDeclaration.aeiDecl->last()][for (elem: ArchiElemInstance | self.archiTypeDecl.atDeclaration.aeiDecl) separator('\n                    ')][if (elem = last_elem)][if (elem.selector->isEmpty())][elem.instanceName/] : [elem.TypeOf.etName/]([if (elem.actualParam->notEmpty())][let last_actual: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual)] [param/][else] [param/],[/if][/for][/let][/if])[else][elem.instanceName/][ '[' /][check_condition_type(elem.selector)/][ ']' /] : [elem.TypeOf.etName/]([if (elem.actualParam->notEmpty())][let last_actual: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual)] [param/][else] [param/],[/if][/for][/let][/if])[/if][else][if (elem.selector->isEmpty())][elem.instanceName/] : [elem.TypeOf.etName/]([if (elem.actualParam->size() > 0)][let last_actual_bis: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual_bis)] [param/][else] [param/],[/if][/for][/let]);[else]);[/if][else][elem.instanceName/][ '[' /][check_condition_type(elem.selector)/][ ']' /] : [elem.TypeOf.etName/]([if (elem.actualParam->size() > 0)][let last_actual_bis: String = elem.actualParam->last()][for (param: String | elem.actualParam)][if (param = last_actual_bis)] [param/][else] [param/],[/if][/for][/let]);[else]);[/if][/if][/if][/for][/let][/if]
 					[comment Ricontrollare se manca qualche controllo/]		
 
 		   ARCHI_INTERACTIONS	
@@ -146,9 +146,17 @@ ARCHI_TOPOLOGY
 					[let last_instance: ArchitecturalInteraction = self.archiTypeDecl.atDeclaration.aiDecl->last()]
 					[for (instance: ArchitecturalInteraction | self.archiTypeDecl.atDeclaration.aiDecl)]
 					[if (instance = last_instance)]
-					[instance.name/]
+					[if (instance.fromInstance.selector->isEmpty())]
+					[instance.fromInstance.instanceName/].[instance.name/]
 					[else]
-					[instance.name/];
+					[instance.fromInstance.instanceName/][ '[' /][check_condition_type(instance.fromInstance.selector)/][ ']' /].[instance.name/]
+					[/if]
+					[else]
+					[if (instance.fromInstance.selector->isEmpty())]
+					[instance.fromInstance.instanceName/].[instance.name/];
+					[else]
+					[instance.fromInstance.instanceName/][ '[' /][check_condition_type(instance.fromInstance.selector)/][ ']' /].[instance.name/];
+					[/if]
 					[/if]
 					[/for]
 					[/let]
@@ -160,10 +168,30 @@ ARCHI_TOPOLOGY
 					[if (not(self.archiTypeDecl.atDeclaration.attDecl->oclIsUndefined()))]
 					[let last_att: Attachment = self.archiTypeDecl.atDeclaration.attDecl->last()]
 					[for (instance: Attachment | self.archiTypeDecl.atDeclaration.attDecl)]
+					[if (instance.start.fromInstance.selector->isEmpty() and instance.end.toInstance.selector->notEmpty())]
+					[if (instance = last_att)]
+					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/][ '[' /][check_condition_type(instance.end.toInstance.selector)/][ ']' /].[instance.end.isInput.intName/]
+					[else]
+					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/][ '[' /][check_condition_type(instance.end.toInstance.selector)/][ ']' /].[instance.end.isInput.intName/];
+					[/if]
+					[elseif (instance.start.fromInstance.selector->notEmpty() and instance.end.toInstance.selector->isEmpty())]
+					[if (instance = last_att)]
+					FROM [instance.start.fromInstance.instanceName/][ '[' /][check_condition_type(instance.start.fromInstance.selector)/][ ']' /].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/]
+					[else]
+					FROM [instance.start.fromInstance.instanceName/][ '[' /][check_condition_type(instance.start.fromInstance.selector)/][ ']' /].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/];
+					[/if]
+					[elseif (instance.start.fromInstance.selector->isEmpty() and instance.end.toInstance.selector->isEmpty())]
 					[if (instance = last_att)]
 					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/]
 					[else]
 					FROM [instance.start.fromInstance.instanceName/].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/].[instance.end.isInput.intName/];
+					[/if]
+					[elseif (instance.start.fromInstance.selector->notEmpty() and instance.end.toInstance.selector->notEmpty())]
+					[if (instance = last_att)]
+					FROM [instance.start.fromInstance.instanceName/][ '[' /][check_condition_type(instance.start.fromInstance.selector)/][ ']' /].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/][ '[' /][check_condition_type(instance.end.toInstance.selector)/][ ']' /].[instance.end.isInput.intName/]
+					[else]
+					FROM [instance.start.fromInstance.instanceName/][ '[' /][check_condition_type(instance.start.fromInstance.selector)/][ ']' /].[instance.start.isOutput.intName/] TO [instance.end.toInstance.instanceName/][ '[' /][check_condition_type(instance.end.toInstance.selector)/][ ']' /].[instance.end.isInput.intName/];
+					[/if]	
 					[/if]
 					[/for]
 					[/let]
@@ -182,15 +210,7 @@ integer
 [elseif e.oclIsTypeOf(DataType::Special)]
 [e.oclAsType(Special).type/]
 [elseif e.oclIsTypeOf(DataType::RangeInt)]	
-[if (e.oclAsType(RangeInt).maxVar->notEmpty() and e.oclAsType(RangeInt).minVar->notEmpty())]
-integer([e.oclAsType(RangeInt).minVar.name/]..[e.oclAsType(RangeInt).maxVar.name/])
-[elseif e.oclAsType(RangeInt).maxVar->notEmpty() and e.oclAsType(RangeInt).minVar->isEmpty()]
-integer([check_condition_type(e.oclAsType(RangeInt).minVal)/]..[e.oclAsType(RangeInt).maxVar.name/])
-[elseif e.oclAsType(RangeInt).maxVar->isEmpty() and e.oclAsType(RangeInt).minVar->notEmpty()]
-integer([e.oclAsType(RangeInt).minVar.name/]..[check_condition_type(e.oclAsType(RangeInt).maxVal)/])
-[elseif (e.oclAsType(RangeInt).maxVar->isEmpty() and e.oclAsType(RangeInt).minVar->isEmpty())]
 integer([check_condition_type(e.oclAsType(RangeInt).minVal)/]..[check_condition_type(e.oclAsType(RangeInt).maxVal)/])
-[/if]
 [elseif e.oclIsTypeOf(DataType::Boolean)]
 boolean
 [elseif e.oclIsTypeOf(DataType::Real)]
@@ -222,7 +242,7 @@ stop
 [elseif (e.oclIsTypeOf(ActionProcess))]
 <[e.oclAsType(ActionProcess).act.name/], [check_rate(e.oclAsType(ActionProcess).act.rate)/]> . [check_process_term(e.oclAsType(ActionProcess).process)/]
 [elseif (e.oclIsTypeOf(BehavProcess))]
-[e.oclAsType(BehavProcess).eqCall.name/]([if (e.oclAsType(BehavProcess).exprs->size() > 0)][let last_expr : OclAny = e.oclAsType(BehavProcess).exprs->last()][for (expression: Expression | e.oclAsType(BehavProcess).exprs)][if (expression = last_expr)][check_condition_type(expression)/][else][check_condition_type(expression)/],[/if][/for][/let][else][if (not(e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->oclIsUndefined()))][let last_par:VarInit = e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->last()][for (par : VarInit | e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar)][if (par = last_par)][par.name/][else][par.name/],[/if][/for][/let][else][/if][/if]) 
+[e.oclAsType(BehavProcess).eqCall.name/]([if (e.oclAsType(BehavProcess).exprs->notEmpty())][let last_expr : OclAny = e.oclAsType(BehavProcess).exprs->last()][for (expression: Expression | e.oclAsType(BehavProcess).exprs)][if (expression = last_expr)][check_condition_type(expression)/][else][check_condition_type(expression)/],[/if][/for][/let][else][if (e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->notEmpty())][let last_par:VarInit = e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar->last()][for (par : VarInit | e.oclAsType(BehavProcess).eqCall.bHeader.left.initVar)][if (par = last_par)][par.name/][else][par.name/],[/if][/for][/let][else][/if][/if]) 
 [elseif (e.oclIsTypeOf(ChoiceProcess))]
 [if not(e.oclAsType(ChoiceProcess).oclIsUndefined())]
 choice
@@ -265,25 +285,11 @@ exp([check_condition_type(e.oclAsType(RateExp).expr)/])
 [elseif e.oclIsTypeOf(RateInf)]
 [if (e.oclAsType(RateInf).inf_priority.oclIsUndefined() or e.oclAsType(RateInf).inf_weight.oclIsUndefined())]
 inf
-[elseif (check_condition_type(e.oclAsType(RateInf).inf_priority).strcmp('1') = 0) and (check_condition_type(e.oclAsType(RateInf).inf_weight).strcmp('1') = 0)]
-inf
-[elseif (check_condition_type(e.oclAsType(RateInf).inf_priority).strcmp('1') = 0) and (check_condition_type(e.oclAsType(RateInf).inf_weight).strcmp('1.0') = 0)]
-inf
-[elseif (check_condition_type(e.oclAsType(RateInf).inf_priority).strcmp('1.0') = 0) and (check_condition_type(e.oclAsType(RateInf).inf_weight).strcmp('1.0') = 0)]
-inf
 [else]
 inf ([check_condition_type(e.oclAsType(RateInf).inf_priority)/], [check_condition_type(e.oclAsType(RateInf).inf_weight)/])
 [/if]
 [elseif e.oclIsTypeOf(RatePas)]
 [if (e.oclAsType(RatePas).priority.oclIsUndefined() or e.oclAsType(RatePas).weight.oclIsUndefined())]
-_
-[elseif (check_condition_type(e.oclAsType(RatePas).priority).strcmp('1.0') = 0) and (check_condition_type(e.oclAsType(RatePas).weight).strcmp('1.0') = 0)]
-_
-[elseif (check_condition_type(e.oclAsType(RatePas).priority).strcmp('1.0') = 0) and (check_condition_type(e.oclAsType(RatePas).weight).strcmp('1') = 0)]
-_
-[elseif (check_condition_type(e.oclAsType(RatePas).priority).strcmp('1') = 0) and (check_condition_type(e.oclAsType(RatePas).weight).strcmp('1.0') = 0)]
-_
-[elseif (check_condition_type(e.oclAsType(RatePas).priority).strcmp('1') = 0) and (check_condition_type(e.oclAsType(RatePas).weight).strcmp('1') = 0)]
 _
 [else]
 _ ([check_condition_type(e.oclAsType(RatePas).priority)/], [check_condition_type(e.oclAsType(RatePas).weight)/])
