@@ -171,8 +171,8 @@ ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
 					CK : Clock_Type();
-                    RD[1] : RDA_Type( 150, 8000000.0, 15.0);
-                    RD[2] : RDA_Type( 150, 8000000.0, 15.0);
+                    RD[1] : RDA_Type( sample_cached_in_rda, disk_store_rate, sensors_sample_rate);
+                    RD[2] : RDA_Type( sample_cached_in_rda, disk_store_rate, sensors_sample_rate);
                     TL : TLDA_Type();
                     WP : TLWPC_Type( 1, disk_store_rate);
                     TR : NetDownRT_Type( simultaneous_notifications, transfer_rate_lvl_1_net);

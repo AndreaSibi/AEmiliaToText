@@ -118,16 +118,16 @@ ARCHI_ELEM_TYPES
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					WSN[1] : WSN_Type( 20000.0);
-                    WSN[2] : WSN_Type( 20000.0);
-                    WSN[3] : WSN_Type( 20000.0);
-                    WSN[4] : WSN_Type( 20000.0);
-                    WSN[5] : WSN_Type( 20000.0);
-                    WSN[6] : WSN_Type( 20000.0);
-                    WSN[7] : WSN_Type( 20000.0);
-                    WSN[8] : WSN_Type( 20000.0);
-                    WSN[9] : WSN_Type( 20000.0);
-                    WSN[10] : WSN_Type( 20000.0);
+					WSN[1] : WSN_Type( wsn_net);
+                    WSN[2] : WSN_Type( wsn_net);
+                    WSN[3] : WSN_Type( wsn_net);
+                    WSN[4] : WSN_Type( wsn_net);
+                    WSN[5] : WSN_Type( wsn_net);
+                    WSN[6] : WSN_Type( wsn_net);
+                    WSN[7] : WSN_Type( wsn_net);
+                    WSN[8] : WSN_Type( wsn_net);
+                    WSN[9] : WSN_Type( wsn_net);
+                    WSN[10] : WSN_Type( wsn_net);
                     App[1] : Mobile_App_Type();
                     App[2] : Mobile_App_Type();
                     App[3] : Mobile_App_Type();

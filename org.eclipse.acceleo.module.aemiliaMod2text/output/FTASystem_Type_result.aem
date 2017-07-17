@@ -1,29 +1,36 @@
 ARCHI_TYPE FTASystem_Type(
 		   const rate msg_gen_rate := 5,	
 		   const rate forward_rate := 5,	
-		   const rate prop_rate := 5,	
-		   const weight stop_prob := 0.2)	
+		   const rate prop_rate_lo := 1,	
+		   const rate prop_rate_hi := 5,	
+		   const weight emrg_prob := 0.2)	
 			
 
 ARCHI_ELEM_TYPES
 
-    ELEM_TYPE FTA_Type(const rate forward_rate)
+    ELEM_TYPE FTA_Type(const weight emrg_prob,const rate forward_rate)
 	
 		BEHAVIOR
  
 
 			Forward( void; void) = 
-					<inFTA1, _> . <forward, exp(forward_rate)> . <outFTA1, inf> . Forward()
+					<forward, exp(forward_rate)> . choice
+					{
+						<inFTA1, _> . <outFTA1, inf (1, 1 - emrg_prob)> . Forward(),
+						<inFTA2, _> . <outFTA2, inf (1, emrg_prob)> . Forward()		
+					}
 	
 		INPUT_INTERACTIONS	
 					
-			UNI inFTA1
+			UNI inFTA1;
+			inFTA2
 
 		OUTPUT_INTERACTIONS
 					
-			UNI outFTA1
+			UNI outFTA1;
+			outFTA2
 
-    ELEM_TYPE NetHi_Type(const rate prop_rate)
+    ELEM_TYPE NetLo_Type(const rate prop_rate_lo)
 	
 		BEHAVIOR
  
@@ -31,8 +38,30 @@ ARCHI_ELEM_TYPES
 			Transmit( void; void) = 
 					choice
 					{
-						<inNetH1, _> . <downstream, exp(prop_rate)> . <outNetH1, inf> . Transmit(),
-						<inNetH2, _> . <upstream, exp(prop_rate)> . <outNetH2, inf> . Transmit()		
+						<inNetL1, _> . <downstream, exp(prop_rate_lo)> . <outNetL1, inf> . Transmit(),
+						<inNetL2, _> . <upstream, exp(prop_rate_lo)> . <outNetL2, inf> . Transmit()		
+					}
+	
+		INPUT_INTERACTIONS	
+					
+			UNI inNetL1;
+			inNetL2
+
+		OUTPUT_INTERACTIONS
+					
+			UNI outNetL1;
+			outNetL2
+
+    ELEM_TYPE NetHi_Type(const rate prop_rate_hi)
+	
+		BEHAVIOR
+ 
+
+			Transmit( void; void) = 
+					choice
+					{
+						<inNetH1, _> . <downstreamH, exp(prop_rate_hi)> . <outNetH1, inf> . Transmit(),
+						<inNetH2, _> . <upstreamH, exp(prop_rate_hi)> . <outNetH2, inf> . Transmit()		
 					}
 	
 		INPUT_INTERACTIONS	
@@ -50,52 +79,66 @@ ARCHI_ELEM_TYPES
 		BEHAVIOR
  
 
-			GetVideo( void; void) = 
-					<inMA1, _> . <getVideo, inf> . GetVideo()
+			GetData( void; void) = 
+					choice
+					{
+						<inMA1, _> . GetData(),
+						<inMA2, _> . GetData()		
+					}
 	
 		INPUT_INTERACTIONS	
 					
-			UNI inMA1
+			UNI inMA1;
+			inMA2
 
 		OUTPUT_INTERACTIONS
 					
-			UNI getVideo
+			void
 
-    ELEM_TYPE Robot_Type(const rate msg_gen_rate,const weight stop_prob)
+    ELEM_TYPE LOC_FTA_Type(const rate msg_gen_rate,const weight emrg_prob)
 	
 		BEHAVIOR
  
 
-			SendVideo( void; void) = 
-					<sendVideo, exp(msg_gen_rate)> . <outR1, inf (1, stop_prob)> . SendVideo()
+			SendData( void; void) = 
+					<send, exp(msg_gen_rate)> . choice
+					{
+						<outLFTA1, inf (1, 1 - emrg_prob)> . SendData(),
+						<outLFTA2, inf (1, emrg_prob)> . SendData()		
+					}
 	
 		INPUT_INTERACTIONS	
 					
-			UNI sendVideo
+			void
 
 		OUTPUT_INTERACTIONS
 					
-			UNI outR1
+			UNI outLFTA1;
+			outLFTA2
 
 				
 
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					FTA : FTA_Type( forward_rate);
-                    NETH : NetHi_Type( prop_rate);
+					FTA : FTA_Type( emrg_prob, forward_rate);
+                    NETL : NetLo_Type( prop_rate_lo);
                     MA : MobApp_Type();
-                    R : Robot_Type( msg_gen_rate, stop_prob)
+                    LFTA : LOC_FTA_Type( msg_gen_rate, emrg_prob);
+                    NETH : NetHi_Type( prop_rate_hi)
 
 		   ARCHI_INTERACTIONS	
-					MA.getVideo;
-					R.sendVideo
+					void
 
 		   ARCHI_ATTACHMENTS
-					FROM R.outR1 TO NETH.inNetH1;
-					FROM NETH.outNetH1 TO FTA.inFTA1;
-					FROM FTA.outFTA1 TO NETH.inNetH2;
-					FROM NETH.outNetH2 TO MA.inMA1
+					FROM LFTA.outLFTA1 TO NETL.inNetL1;
+					FROM NETL.outNetL1 TO FTA.inFTA1;
+					FROM FTA.outFTA1 TO NETL.inNetL2;
+					FROM NETL.outNetL2 TO MA.inMA1;
+					FROM LFTA.outLFTA2 TO NETH.inNetH1;
+					FROM NETH.outNetH1 TO FTA.inFTA2;
+					FROM FTA.outFTA2 TO NETH.inNetH2;
+					FROM NETH.outNetH2 TO MA.inMA2
 				
 END
 

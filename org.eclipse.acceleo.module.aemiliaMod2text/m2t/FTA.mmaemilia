@@ -290,7 +290,7 @@
     </aetDeclaration>
     <atDeclaration>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -308,7 +308,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.0/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -328,7 +328,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -346,7 +346,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.1/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -366,7 +366,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="2" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -384,7 +384,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.2/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -404,7 +404,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="3" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -422,7 +422,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.3/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -442,7 +442,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="4" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -460,7 +460,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.4/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -480,7 +480,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="5" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -498,7 +498,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.5/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -518,7 +518,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="6" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -536,7 +536,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.6/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -556,7 +556,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="7" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -574,7 +574,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.7/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -594,7 +594,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="8" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -612,7 +612,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.8/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>
@@ -632,7 +632,7 @@
         <selector xsi:type="Expressions:IdentExpr" name="9" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="WSN" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.0">
-        <actualParam>20000.0</actualParam>
+        <actualParam>wsn_net</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="WSN">
@@ -650,7 +650,7 @@
                   <act name="transmit_sensed_data" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.9/@elem">
                     <type/>
                     <rate xsi:type="Behavior:RateExp">
-                      <expr xsi:type="Expressions:IdentExpr" name="20000" type="NUMERIC_CONST"/>
+                      <expr xsi:type="Expressions:IdentExpr" name="20000.0" type="NUMERIC_CONST"/>
                     </rate>
                     <is xsi:type="mmaemilia:OutputInteraction" intName="transmit_sensed_data"/>
                   </act>

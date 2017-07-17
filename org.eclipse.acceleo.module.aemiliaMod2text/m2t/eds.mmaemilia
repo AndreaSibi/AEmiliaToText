@@ -543,9 +543,9 @@
         </elem>
       </aeiDecl>
       <aeiDecl instanceName="RD" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
-        <actualParam>150</actualParam>
-        <actualParam>8000000.0</actualParam>
-        <actualParam>15.0</actualParam>
+        <actualParam>sample_cached_in_rda</actualParam>
+        <actualParam>disk_store_rate</actualParam>
+        <actualParam>sensors_sample_rate</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="StoreData">
@@ -620,7 +620,7 @@
                     <act name="store" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.1/@elem">
                       <type/>
                       <rate xsi:type="Behavior:RateExp">
-                        <expr xsi:type="Expressions:IdentExpr" name="8000000" type="NUMERIC_CONST"/>
+                        <expr xsi:type="Expressions:IdentExpr" name="8000000.0" type="NUMERIC_CONST"/>
                       </rate>
                       <is intName="store"/>
                     </act>
@@ -641,9 +641,9 @@
         <selector xsi:type="Expressions:IdentExpr" name="1" type="NUMERIC_CONST"/>
       </aeiDecl>
       <aeiDecl instanceName="RD" TypeOf="//@archiTypeDecl/@aetDeclaration/@etDeclaration.1">
-        <actualParam>150</actualParam>
-        <actualParam>8000000.0</actualParam>
-        <actualParam>15.0</actualParam>
+        <actualParam>sample_cached_in_rda</actualParam>
+        <actualParam>disk_store_rate</actualParam>
+        <actualParam>sensors_sample_rate</actualParam>
         <elem>
           <behaviorDecl>
             <equations name="StoreData">
@@ -718,7 +718,7 @@
                     <act name="store" elem="//@archiTypeDecl/@atDeclaration/@aeiDecl.2/@elem">
                       <type/>
                       <rate xsi:type="Behavior:RateExp">
-                        <expr xsi:type="Expressions:IdentExpr" name="8000000" type="NUMERIC_CONST"/>
+                        <expr xsi:type="Expressions:IdentExpr" name="8000000.0" type="NUMERIC_CONST"/>
                       </rate>
                       <is intName="store"/>
                     </act>
