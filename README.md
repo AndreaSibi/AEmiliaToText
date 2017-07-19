@@ -18,12 +18,11 @@ Model2text transformation da un modello Aemilia (generato per mezzo di una text2
 - Inizializzazione tramite espressione:
   
     EX (dalla sintassi Aemilia per la dichiarazione delle architectural interactions, ma vale in qualsiasi parte compaia la stessa tipologia di sintassi): 
-	
-   >`<architectural_interaction_decl> ::= <identifier> ["[" <expr> "]"] "." <identifier>`
-   >
-   >  						 | "FOR_ALL" <identifier> "IN" <expr> ".." <expr>
-   >
-   >						 <identifier> "[" <expr> "]" "." <identifier>
+>```
+>    <architectural_interaction_decl> ::= <identifier> ["[" <expr> "]"] "." <identifier>
+>	                                      | "FOR_ALL" <identifier> "IN" <expr> ".." <expr>
+>		      			        <identifier> "[" <expr> "]" "." <identifier>
+>```	
 
    La selezione mediante `["[" <expr> "]"]` non è contemplata nella trasformazione, dunque eventuali futuri modelli che ne faranno uso non saranno tradotti correttamente. 
 - Mancato utilizzo del costrutto FORALL della sintassi Aemilia. Sarà comunque sostituito da dichiarazioni singole.
