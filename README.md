@@ -54,8 +54,15 @@ Please refer to *Issues* section in the repository
    	|*SituationMonitoring.aem*|YES|YES|
 
 ## Run the tests
+
+**First option (manually)**
 In order to run the transformation, please follow these steps:
 - Load the Aemilia2Text_MetaInf project into the workspace of the specific version of Eclipse;
 - Register the mmAEmilia.ecore metamodel in the *model* folder and regenerate the metamodel code;
 - Run the Aemilia2Text_MetaInf project as a new Eclipse instance and load the Acceleo project org.eclipse.acceleo.module.aemiliaMod2text;
 - Run the main class *generate.mtl* as Acceleo Application in the *src / main* folder, setting the required parameters.
+
+**Second option (by using java code)**
+- Going inside the Eclipse runtime instance (folder org.eclipse.acceleo.module.aemiliaMod2text); 
+- Going into src/org/eclipse/acceleo/module/aemiliaMod2text/main path;
+- Running the *Run.java* file
