@@ -1,194 +1,178 @@
 ARCHI_TYPE fta(
-		   const integer wsn_num := 10,	
-		   const integer app_num := 10,	
-		   const rate wsn_net := 20000,	
-		   const rate analyze_rate := 100000,	
-		   const rate refine_rate := 200000,	
-		   const rate deliver_sensed_data_rate := 80000,	
-		   const rate broadcast_rate := 80000,	
-		   const rate store_db := 100000,	
-		   const weight alarm_prob := 0.1)	
+		   const rate wsn_rate := 1000,	
+		   const rate channel_rate := 50,	
+		   const rate fta_rate := 500000000,	
+		   const rate packet_rate := 0.1,	
+		   const rate ShowMap_rate := 500000,	
+		   const rate lan_rate := 200,	
+		   const rate db_rate := 200,	
+		   const rate dec_rate := 25)	
 			
 
 ARCHI_ELEM_TYPES
 
-    ELEM_TYPE WSN_Type(const rate wsn_net)
+    ELEM_TYPE Wsn_Type(const rate wsn_rate)
 	
 		BEHAVIOR
  
 
-			WSN( void; void) = 
-					<generate_sensed_data, inf> . <transmit_sensed_data, exp(wsn_net)> . WSN()
+			SendData( void; void) = 
+					<generate_data, exp(wsn_rate)> . <send_data, inf> . SendData()
 	
 		INPUT_INTERACTIONS	
 					
-			UNI generate_sensed_data
+			UNI generate_data
 
 		OUTPUT_INTERACTIONS
 					
-			UNI transmit_sensed_data
+			UNI send_data
 
-    ELEM_TYPE Gateway_Receiver_Type(const rate deliver_sensed_data_rate)
+    ELEM_TYPE Channel_Type(const rate channel_rate)
 	
 		BEHAVIOR
  
 
-			Gateway( void; void) = 
-					<receive_sensed_data, _> . <deliver_sensed_data, exp(deliver_sensed_data_rate)> . Gateway()
+			Channel( void; void) = 
+					<receive_data, _> . <forward_data, exp(channel_rate)> . Channel()
 	
 		INPUT_INTERACTIONS	
 					
-			OR receive_sensed_data
+			UNI receive_data
 
 		OUTPUT_INTERACTIONS
 					
-			UNI deliver_sensed_data
+			UNI forward_data
 
-    ELEM_TYPE Gateway_Sender_Type(const rate broadcast_rate)
+    ELEM_TYPE Fta_Type(const rate fta_rate,const rate packet_rate)
 	
 		BEHAVIOR
  
 
-			Gateway( void; void) = 
-					<receive_refined_data, _> . <deliver_refined_data, exp(broadcast_rate)> . Gateway()
+			Fta( void; void) = 
+					<receive, _> . <packet_data, exp(packet_rate)> . <sendto_security, _> . <receive_decrypted, _> . <process_data, exp(fta_rate)> . <sendto_db, _> . <sendto_desktop, _> . Fta()
 	
 		INPUT_INTERACTIONS	
 					
-			UNI receive_refined_data
+			UNI receive;
+			receive_decrypted
 
 		OUTPUT_INTERACTIONS
 					
-			AND deliver_refined_data
+			UNI sendto_db;
+			sendto_desktop;
+			sendto_security;
+			process_data;
+			packet_data
 
-    ELEM_TYPE Core_Type(const weight alarm_prob,const rate analyze_rate,const rate refine_rate)
+    ELEM_TYPE Lan_Type(const rate lan_rate)
 	
 		BEHAVIOR
  
 
-			Core( void; void) = 
-					<receive_sensed_data, _> . choice
+			Lan( void; void) = 
+					choice
 					{
-						<normal_status, inf (1, 1 - alarm_prob)> . <analyze_sensed_data, exp(analyze_rate)> . <transmit_sensed_data, inf> . Core(),
-						<alarm_status, inf (1, alarm_prob)> . <refine_sensed_data, exp(refine_rate)> . <transmit_refined_data, inf> . Core()		
+						<lanto_db, inf> . <frwdto_db, exp(lan_rate)> . Lan(),
+						<lanto_desk, inf> . <frwdto_desk, exp(lan_rate)> . Lan(),
+						<lanto_sec, inf> . <frwdto_sec, exp(lan_rate)> . Lan(),
+						<lanto_fta, inf> . <frwdto_fta, exp(lan_rate)> . Lan()		
 					}
 	
 		INPUT_INTERACTIONS	
 					
-			UNI receive_sensed_data
+			UNI lanto_db;
+			lanto_desk;
+			lanto_sec;
+			lanto_fta
 
 		OUTPUT_INTERACTIONS
 					
-			UNI transmit_sensed_data;
-			transmit_refined_data
+			UNI frwdto_db;
+			frwdto_desk;
+			frwdto_sec;
+			frwdto_fta
 
-    ELEM_TYPE Rel_DB_Type(const rate store_db)
+    ELEM_TYPE Desk_Type(const rate ShowMap_rate)
 	
 		BEHAVIOR
  
 
-			DB( void; void) = 
-					<receive_sensed_data, _> . <store, exp(store_db)> . DB()
+			ShowMap( void; void) = 
+					<receive_map, _> . <show_map, exp(ShowMap_rate)> . ShowMap()
 	
 		INPUT_INTERACTIONS	
 					
-			UNI receive_sensed_data
+			UNI receive_map
 
 		OUTPUT_INTERACTIONS
 					
-			void
+			UNI show_map
 
-    ELEM_TYPE Mobile_App_Type(void)
+    ELEM_TYPE DB_Type(const rate db_rate)
 	
 		BEHAVIOR
  
 
-			App( void; void) = 
-					<receive_refined_data, _> . <consume_refined_data, inf> . App()
+			StoreData( void; void) = 
+					<receive_fta_data, _> . <store_data, exp(db_rate)> . StoreData()
 	
 		INPUT_INTERACTIONS	
 					
-			UNI receive_refined_data
+			UNI receive_fta_data
 
 		OUTPUT_INTERACTIONS
 					
-			UNI consume_refined_data
+			UNI store_data
+
+    ELEM_TYPE Sec_Type(const rate dec_rate)
+	
+		BEHAVIOR
+ 
+
+			Security( void; void) = 
+					<receive_ftas, _> . <decrypt_data, exp(dec_rate)> . <sendto_fta, _> . Security()
+	
+		INPUT_INTERACTIONS	
+					
+			UNI receive_ftas
+
+		OUTPUT_INTERACTIONS
+					
+			UNI sendto_fta;
+			decrypt_data
 
 				
 
 ARCHI_TOPOLOGY
 				
            ARCHI_ELEM_INSTANCES
-					WSN[1] : WSN_Type( wsn_net);
-                    WSN[2] : WSN_Type( wsn_net);
-                    WSN[3] : WSN_Type( wsn_net);
-                    WSN[4] : WSN_Type( wsn_net);
-                    WSN[5] : WSN_Type( wsn_net);
-                    WSN[6] : WSN_Type( wsn_net);
-                    WSN[7] : WSN_Type( wsn_net);
-                    WSN[8] : WSN_Type( wsn_net);
-                    WSN[9] : WSN_Type( wsn_net);
-                    WSN[10] : WSN_Type( wsn_net);
-                    App[1] : Mobile_App_Type();
-                    App[2] : Mobile_App_Type();
-                    App[3] : Mobile_App_Type();
-                    App[4] : Mobile_App_Type();
-                    App[5] : Mobile_App_Type();
-                    App[6] : Mobile_App_Type();
-                    App[7] : Mobile_App_Type();
-                    App[8] : Mobile_App_Type();
-                    App[9] : Mobile_App_Type();
-                    App[10] : Mobile_App_Type();
-                    GR : Gateway_Receiver_Type( deliver_sensed_data_rate);
-                    GS : Gateway_Sender_Type( broadcast_rate);
-                    Core : Core_Type( alarm_prob, analyze_rate, refine_rate);
-                    RDB : Rel_DB_Type( store_db)
+					WSN : Wsn_Type( wsn_rate);
+                    CHN : Channel_Type( channel_rate);
+                    FTA : Fta_Type( fta_rate, packet_rate);
+                    LAN : Lan_Type( lan_rate);
+                    DB : DB_Type( db_rate);
+                    DSK : Desk_Type( ShowMap_rate);
+                    SCR : Sec_Type( dec_rate)
 
 		   ARCHI_INTERACTIONS	
-					WSN[1].generate_sensed_data;
-					WSN[2].generate_sensed_data;
-					WSN[3].generate_sensed_data;
-					WSN[4].generate_sensed_data;
-					WSN[5].generate_sensed_data;
-					WSN[6].generate_sensed_data;
-					WSN[7].generate_sensed_data;
-					WSN[8].generate_sensed_data;
-					WSN[9].generate_sensed_data;
-					WSN[10].generate_sensed_data;
-					App[1].consume_refined_data;
-					App[2].consume_refined_data;
-					App[3].consume_refined_data;
-					App[4].consume_refined_data;
-					App[5].consume_refined_data;
-					App[6].consume_refined_data;
-					App[7].consume_refined_data;
-					App[8].consume_refined_data;
-					App[9].consume_refined_data;
-					App[10].consume_refined_data
+					WSN.generate_data;
+					DB.store_data;
+					DSK.show_map;
+					SCR.decrypt_data;
+					FTA.process_data;
+					FTA.packet_data
 
 		   ARCHI_ATTACHMENTS
-					FROM WSN[1].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[2].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[3].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[4].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[5].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[6].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[7].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[8].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[9].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM WSN[10].transmit_sensed_data TO GR.receive_sensed_data;
-					FROM GR.deliver_sensed_data TO Core.receive_sensed_data;
-					FROM Core.transmit_sensed_data TO RDB.receive_sensed_data;
-					FROM Core.transmit_refined_data TO GS.receive_refined_data;
-					FROM GS.deliver_refined_data TO App[1].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[2].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[3].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[4].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[5].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[6].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[7].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[8].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[9].receive_refined_data;
-					FROM GS.deliver_refined_data TO App[10].receive_refined_data
+					FROM WSN.send_data TO CHN.receive_data;
+					FROM CHN.forward_data TO FTA.receive;
+					FROM FTA.sendto_db TO LAN.lanto_db;
+					FROM FTA.sendto_desktop TO LAN.lanto_desk;
+					FROM FTA.sendto_security TO LAN.lanto_sec;
+					FROM LAN.frwdto_desk TO DSK.receive_map;
+					FROM LAN.frwdto_db TO DB.receive_fta_data;
+					FROM LAN.frwdto_fta TO FTA.receive_decrypted;
+					FROM LAN.frwdto_sec TO SCR.receive_ftas;
+					FROM SCR.sendto_fta TO LAN.lanto_fta
 				
 END
 

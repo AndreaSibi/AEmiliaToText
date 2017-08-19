@@ -1,0 +1,17 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generaterew.
+ */]
+[module generaterew('http://mmaemilia.ecore')]
+
+
+[**
+ * The documentation of the template generaterew.
+ * @param anAEmiliaSpecification
+ */]
+[template public generaterew(anAEmiliaSpecification : AEmiliaSpecification)]
+[comment @main/]
+[file (anAEmiliaSpecification.archiTypeDecl.atName.concat('_result.rew'), false, 'UTF-8')]
+
+[/file]
+[/template]

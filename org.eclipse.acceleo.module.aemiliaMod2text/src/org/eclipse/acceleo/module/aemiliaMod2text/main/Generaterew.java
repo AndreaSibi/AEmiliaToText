@@ -25,24 +25,24 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * Entry point of the 'Generate' generation module.
+ * Entry point of the 'Generaterew' generation module.
  *
  * @generated
  */
-public class Generate extends AbstractAcceleoGenerator {
+public class Generaterew extends AbstractAcceleoGenerator {
     /**
      * The name of the module.
      *
      * @generated
      */
-    public static final String MODULE_FILE_NAME = "/org/eclipse/acceleo/module/aemiliaMod2text/main/generate";
+    public static final String MODULE_FILE_NAME = "/org/eclipse/acceleo/module/aemiliaMod2text/main/generaterew";
     
     /**
      * The name of the templates that are to be generated.
      *
      * @generated
      */
-    public static final String[] TEMPLATE_NAMES = { "generateElement" };
+    public static final String[] TEMPLATE_NAMES = { "generaterew" };
     
     /**
      * The list of properties files from the launch parameters (Launch configuration).
@@ -65,7 +65,7 @@ public class Generate extends AbstractAcceleoGenerator {
      *
      * @generated
      */
-    public Generate() {
+    public Generaterew() {
         // Empty implementation
     }
 
@@ -85,7 +85,7 @@ public class Generate extends AbstractAcceleoGenerator {
      *             the model cannot be loaded.
      * @generated
      */
-    public Generate(URI modelURI, File targetFolder,
+    public Generaterew(URI modelURI, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(modelURI, targetFolder, arguments);
     }
@@ -106,7 +106,7 @@ public class Generate extends AbstractAcceleoGenerator {
      *             This can be thrown in two scenarios : the module cannot be found, or it cannot be loaded.
      * @generated
      */
-    public Generate(EObject model, File targetFolder,
+    public Generaterew(EObject model, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(model, targetFolder, arguments);
     }
@@ -141,7 +141,7 @@ public class Generate extends AbstractAcceleoGenerator {
                  * add in "arguments" this "String" attribute.
                  */
                 
-                Generate generator = new Generate(modelURI, folder, arguments);
+                Generaterew generator = new Generaterew(modelURI, folder, arguments);
                 
                 /*
                  * Add the properties from the launch arguments.
@@ -163,25 +163,6 @@ public class Generate extends AbstractAcceleoGenerator {
             e.printStackTrace();
         }
     }
-    
-    
-    
-    
-    public static void run(String modelUri, String outputFolder) {
-        try {
-            
-                URI modelURI = URI.createFileURI(modelUri);
-                File folder = new File(outputFolder);
-                List<String> arguments = new ArrayList<String>();
-                Generate generator = new Generate(modelURI, folder, arguments);
-                generator.doGenerate(new BasicMonitor());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
-    
 
     /**
      * Launches the generation described by this instance.
