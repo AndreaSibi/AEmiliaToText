@@ -164,6 +164,23 @@ public class Generaterew extends AbstractAcceleoGenerator {
         }
     }
 
+    
+    
+    public static void run(String modelUri, String outputFolder) {
+        try {
+            
+                URI modelURI = URI.createFileURI(modelUri);
+                File folder = new File(outputFolder);
+                List<String> arguments = new ArrayList<String>();
+                Generaterew generator = new Generaterew(modelURI, folder, arguments);
+                generator.doGenerate(new BasicMonitor());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
     /**
      * Launches the generation described by this instance.
      * 
