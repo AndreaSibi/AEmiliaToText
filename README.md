@@ -66,5 +66,4 @@ In order to run the transformation, please follow these steps:
 **Second option (by using java code)**
 - Going inside the Eclipse runtime instance (folder org.eclipse.acceleo.module.aemiliaMod2text); 
 - Going into src/org/eclipse/acceleo/module/aemiliaMod2text/main path;
-- Running the *Run.java* (for .aem transformation) file
-- Running the *RunREW.java* (for .rew transformation) file
+- Running the *Generate_Transformation.java* (for .aem transformation) file. In order to do this step you must pass an argument by command line. This argument (aem or rew) corresponds to the transformation you want; 
