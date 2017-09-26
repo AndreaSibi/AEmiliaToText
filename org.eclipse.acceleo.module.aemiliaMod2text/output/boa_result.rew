@@ -64,5 +64,5 @@
 				ENABLED (SB.req_data) ->STATE_REWARD(1.0);
 
 		MEASURE DB_Type_Single_throughtput_DB_transmit_data IS ENABLED (DB.transmit_data) ->TRANS_REWARD(1.0);
-		MEASURE DB_Type_Single_utilization_DB_transmit_data IS ENABLED (DB.transmit_data) ->STATE_REWARD(1.0);	
+		MEASURE DB_Type_Single_utilization_DB_transmit_data IS ENABLED (DB.transmit_data) ->STATE_REWARD(1.0)
 		

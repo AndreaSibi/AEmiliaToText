@@ -61,7 +61,7 @@
 		MEASURE Desk_Type_Single_utilization_DSK_show_map IS ENABLED (DSK.show_map) ->STATE_REWARD(1.0);
 
 		MEASURE Sec_Type_Single_throughtput_SCR_sendto_fta IS ENABLED (SCR.sendto_fta) ->TRANS_REWARD(1.0);
-		MEASURE Sec_Type_Single_utilization_SCR_sendto_fta IS ENABLED (SCR.sendto_fta) ->STATE_REWARD(1.0);	
+		MEASURE Sec_Type_Single_utilization_SCR_sendto_fta IS ENABLED (SCR.sendto_fta) ->STATE_REWARD(1.0)
 
 		MEASURE Sec_Type_Single_throughtput_SCR_decrypt_data IS ENABLED (SCR.decrypt_data) ->TRANS_REWARD(1.0);
 		MEASURE Sec_Type_Single_utilization_SCR_decrypt_data IS ENABLED (SCR.decrypt_data) ->STATE_REWARD(1.0);	
@@ -70,5 +70,5 @@
 				ENABLED (SCR.decrypt_data) ->TRANS_REWARD(1.0);
 		MEASURE Sec_Type_Multiple_utilization_SCR IS 
 				ENABLED (SCR.sendto_fta) ->STATE_REWARD(1.0)
-				ENABLED (SCR.decrypt_data) ->STATE_REWARD(1.0);
+				ENABLED (SCR.decrypt_data) ->STATE_REWARD(1.0)
 		
