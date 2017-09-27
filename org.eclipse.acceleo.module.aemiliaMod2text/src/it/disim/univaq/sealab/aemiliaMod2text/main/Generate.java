@@ -8,7 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package org.eclipse.acceleo.module.aemiliaMod2text.main;
+package it.disim.univaq.sealab.aemiliaMod2text.main;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,24 +25,24 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * Entry point of the 'Generaterew' generation module.
+ * Entry point of the 'Generate' generation module.
  *
  * @generated
  */
-public class Generaterew extends AbstractAcceleoGenerator {
+public class Generate extends AbstractAcceleoGenerator {
     /**
      * The name of the module.
      *
      * @generated
      */
-    public static final String MODULE_FILE_NAME = "/org/eclipse/acceleo/module/aemiliaMod2text/main/generaterew";
+    public static final String MODULE_FILE_NAME = "/it/disim/univaq/sealab/aemiliaMod2text/main/generate";
     
     /**
      * The name of the templates that are to be generated.
      *
      * @generated
      */
-    public static final String[] TEMPLATE_NAMES = { "generaterew" };
+    public static final String[] TEMPLATE_NAMES = { "generateElement" };
     
     /**
      * The list of properties files from the launch parameters (Launch configuration).
@@ -65,7 +65,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
      *
      * @generated
      */
-    public Generaterew() {
+    public Generate() {
         // Empty implementation
     }
 
@@ -85,7 +85,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
      *             the model cannot be loaded.
      * @generated
      */
-    public Generaterew(URI modelURI, File targetFolder,
+    public Generate(URI modelURI, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(modelURI, targetFolder, arguments);
     }
@@ -106,7 +106,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
      *             This can be thrown in two scenarios : the module cannot be found, or it cannot be loaded.
      * @generated
      */
-    public Generaterew(EObject model, File targetFolder,
+    public Generate(EObject model, File targetFolder,
             List<? extends Object> arguments) throws IOException {
         initialize(model, targetFolder, arguments);
     }
@@ -141,7 +141,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
                  * add in "arguments" this "String" attribute.
                  */
                 
-                Generaterew generator = new Generaterew(modelURI, folder, arguments);
+                Generate generator = new Generate(modelURI, folder, arguments);
                 
                 /*
                  * Add the properties from the launch arguments.
@@ -163,7 +163,8 @@ public class Generaterew extends AbstractAcceleoGenerator {
             e.printStackTrace();
         }
     }
-
+    
+    
     
     
     public static void run(String modelUri, String outputFolder) {
@@ -172,7 +173,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
                 URI modelURI = URI.createFileURI(modelUri);
                 File folder = new File(outputFolder);
                 List<String> arguments = new ArrayList<String>();
-                Generaterew generator = new Generaterew(modelURI, folder, arguments);
+                Generate generator = new Generate(modelURI, folder, arguments);
                 generator.doGenerate(new BasicMonitor());
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,6 +182,7 @@ public class Generaterew extends AbstractAcceleoGenerator {
     
     
     
+
     /**
      * Launches the generation described by this instance.
      * 
@@ -357,24 +359,6 @@ public class Generaterew extends AbstractAcceleoGenerator {
     @Override
     public void registerPackages(ResourceSet resourceSet) {
         super.registerPackages(resourceSet);
-        if (!isInWorkspace(mmaemilia.MmaemiliaPackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.MmaemiliaPackage.eINSTANCE.getNsURI(), mmaemilia.MmaemiliaPackage.eINSTANCE);
-        }
-        if (!isInWorkspace(mmaemilia.DataType.DataTypePackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.DataType.DataTypePackage.eINSTANCE.getNsURI(), mmaemilia.DataType.DataTypePackage.eINSTANCE);
-        }
-        if (!isInWorkspace(mmaemilia.Expressions.ExpressionsPackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.Expressions.ExpressionsPackage.eINSTANCE.getNsURI(), mmaemilia.Expressions.ExpressionsPackage.eINSTANCE);
-        }
-        if (!isInWorkspace(mmaemilia.Headers.HeadersPackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.Headers.HeadersPackage.eINSTANCE.getNsURI(), mmaemilia.Headers.HeadersPackage.eINSTANCE);
-        }
-        if (!isInWorkspace(mmaemilia.Behavior.BehaviorPackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.Behavior.BehaviorPackage.eINSTANCE.getNsURI(), mmaemilia.Behavior.BehaviorPackage.eINSTANCE);
-        }
-        if (!isInWorkspace(mmaemilia.QueueingNetwork.QueueingNetworkPackage.class)) {
-            resourceSet.getPackageRegistry().put(mmaemilia.QueueingNetwork.QueueingNetworkPackage.eINSTANCE.getNsURI(), mmaemilia.QueueingNetwork.QueueingNetworkPackage.eINSTANCE);
-        }
         
         /*
          * If you want to change the content of this method, do NOT forget to change the "@generated"

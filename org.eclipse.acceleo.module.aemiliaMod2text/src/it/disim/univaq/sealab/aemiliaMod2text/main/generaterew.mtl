@@ -19,15 +19,21 @@
 		[comment NOTA: Probabilmente necessito anche qui di una condizione di controllo prima di entrare nel for al fine di controllare quali istanze prendere in considerazione/]
 		[comment Ciclo su tutte le "Architectural Element Instances"/]
 		[for (elem: ArchiElemInstance | self.archiTypeDecl.atDeclaration.aeiDecl) separator('\n')]
-	    [comment Inserire qui la condizione desiderata (quantomeno l'indice da misurare al fine di verificare se sull'elemento corrente è possibile fare questa misurazione)/]
+	    [comment Inserire qui la condizione desiderata (quantomeno l'indice da misurare al fine di verificare se sull'elemento corrente ï¿½ possibile fare questa misurazione)/]
 		[if (1=1)]
 		[if (elem = last_elem)]
 		[if (elem.selector->isEmpty())]
 		[if (not(elem.TypeOf.oiDecl->isEmpty()))]
 		[comment Istanze singole - Azioni singole/]
 		[for (interaction: OutputInteraction | elem.TypeOf.oiDecl) separator('\n')]
-		MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
-		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);	
+		[if (interaction = elem.TypeOf.oiDecl->last())]
+			MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
+			MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
+		[else]
+			MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
+			MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);
+		[/if]
+			
 		[comment Aggiungere anche TRANS_REWARD per utilization e STATE_REWARD per throughtput?? --> Non ha molto senso!!/]
 		[/for]
 		[comment Istanze singole - Azioni multiple (throughtput e utilization)/]

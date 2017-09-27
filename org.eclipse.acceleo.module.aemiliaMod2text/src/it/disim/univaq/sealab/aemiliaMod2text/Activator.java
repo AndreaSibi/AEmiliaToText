@@ -8,7 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package org.eclipse.acceleo.module.aemiliaMod2text;
+package it.disim.univaq.sealab.aemiliaMod2text;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
