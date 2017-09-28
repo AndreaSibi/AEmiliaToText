@@ -36,7 +36,7 @@
 		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
 		[else]
 		MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
-		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
+		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);
 		[/if]
 		[/for]
 		[/let]

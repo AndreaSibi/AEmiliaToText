@@ -64,5 +64,44 @@
 				ENABLED (SB.req_data) ->STATE_REWARD(1.0);
 
 		MEASURE DB_Type_Single_throughtput_DB_transmit_data IS ENABLED (DB.transmit_data) ->TRANS_REWARD(1.0);
-		MEASURE DB_Type_Single_utilization_DB_transmit_data IS ENABLED (DB.transmit_data) ->STATE_REWARD(1.0)
+		MEASURE DB_Type_Single_utilization_DB_transmit_data IS ENABLED (DB.transmit_data) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SA_cloned_99_transmit_result_best_path IS ENABLED (SA_cloned_99.transmit_result_best_path) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SA_cloned_99_transmit_result_best_path IS ENABLED (SA_cloned_99.transmit_result_best_path) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SA_cloned_99_req_data IS ENABLED (SA_cloned_99.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SA_cloned_99_req_data IS ENABLED (SA_cloned_99.req_data) ->STATE_REWARD(1.0);
+		MEASURE Server_Type_Multiple_throughtput_SA_cloned_99 IS 
+				ENABLED (SA_cloned_99.transmit_result_best_path) ->TRANS_REWARD(1.0)
+				ENABLED (SA_cloned_99.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Multiple_utilization_SA_cloned_99 IS 
+				ENABLED (SA_cloned_99.transmit_result_best_path) ->STATE_REWARD(1.0)
+				ENABLED (SA_cloned_99.req_data) ->STATE_REWARD(1.0);
+
+		MEASURE DB_Type_Single_throughtput_DB_cloned_13_transmit_data IS ENABLED (DB_cloned_13.transmit_data) ->TRANS_REWARD(1.0);
+		MEASURE DB_Type_Single_utilization_DB_cloned_13_transmit_data IS ENABLED (DB_cloned_13.transmit_data) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SA_cloned_45_transmit_result_best_path IS ENABLED (SA_cloned_45.transmit_result_best_path) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SA_cloned_45_transmit_result_best_path IS ENABLED (SA_cloned_45.transmit_result_best_path) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SA_cloned_45_req_data IS ENABLED (SA_cloned_45.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SA_cloned_45_req_data IS ENABLED (SA_cloned_45.req_data) ->STATE_REWARD(1.0);
+		MEASURE Server_Type_Multiple_throughtput_SA_cloned_45 IS 
+				ENABLED (SA_cloned_45.transmit_result_best_path) ->TRANS_REWARD(1.0)
+				ENABLED (SA_cloned_45.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Multiple_utilization_SA_cloned_45 IS 
+				ENABLED (SA_cloned_45.transmit_result_best_path) ->STATE_REWARD(1.0)
+				ENABLED (SA_cloned_45.req_data) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SB_cloned_62_transmit_result_best_path IS ENABLED (SB_cloned_62.transmit_result_best_path) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SB_cloned_62_transmit_result_best_path IS ENABLED (SB_cloned_62.transmit_result_best_path) ->STATE_REWARD(1.0);
+
+		MEASURE Server_Type_Single_throughtput_SB_cloned_62_req_data IS ENABLED (SB_cloned_62.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Single_utilization_SB_cloned_62_req_data IS ENABLED (SB_cloned_62.req_data) ->STATE_REWARD(1.0);	
+		MEASURE Server_Type_Multiple_throughtput_SB_cloned_62 IS 
+				ENABLED (SB_cloned_62.transmit_result_best_path) ->TRANS_REWARD(1.0)
+				ENABLED (SB_cloned_62.req_data) ->TRANS_REWARD(1.0);
+		MEASURE Server_Type_Multiple_utilization_SB_cloned_62 IS 
+				ENABLED (SB_cloned_62.transmit_result_best_path) ->STATE_REWARD(1.0)
+				ENABLED (SB_cloned_62.req_data) ->STATE_REWARD(1.0)
 		
