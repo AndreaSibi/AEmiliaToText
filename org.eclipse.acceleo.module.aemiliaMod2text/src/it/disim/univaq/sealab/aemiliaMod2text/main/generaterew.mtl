@@ -25,17 +25,21 @@
 		[if (elem.selector->isEmpty())]
 		[if (not(elem.TypeOf.oiDecl->isEmpty()))]
 		[comment Istanze singole - Azioni singole/]
+		[let last_interaction: OutputInteraction = elem.TypeOf.oiDecl->last()]
 		[for (interaction: OutputInteraction | elem.TypeOf.oiDecl) separator('\n')]
-		[if (interaction = elem.TypeOf.oiDecl->last())]
-			MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
-			MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
-		[else]
-			MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
-			MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);
-		[/if]
-			
+		[if (interaction = last_interaction and elem.TypeOf.oiDecl->size() > 1)]
+		MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
+		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);	
 		[comment Aggiungere anche TRANS_REWARD per utilization e STATE_REWARD per throughtput?? --> Non ha molto senso!!/]
+		[elseif (interaction = last_interaction and not(elem.TypeOf.oiDecl->size() > 1))]
+		MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
+		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0) 
+		[else]
+		MEASURE [elem.TypeOf.etName/]_Single_throughtput_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->TRANS_REWARD(1.0);
+		MEASURE [elem.TypeOf.etName/]_Single_utilization_[elem.instanceName/]_[interaction.intName/] IS ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0); 
+		[/if]
 		[/for]
+		[/let]
 		[comment Istanze singole - Azioni multiple (throughtput e utilization)/]
 		[if (not(elem.TypeOf.oiDecl->isEmpty()) and elem.TypeOf.oiDecl->size() > 1)]
 		[for (interaction: OutputInteraction | elem.TypeOf.oiDecl)]
@@ -53,7 +57,7 @@
 		MEASURE [elem.TypeOf.etName/]_Multiple_utilization_[elem.instanceName/] IS 
 				ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
 		[elseif (interaction = elem.TypeOf.oiDecl->last())]
-				ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0);
+				ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
 		[else]
 				ENABLED ([elem.instanceName/].[interaction.intName/]) ->STATE_REWARD(1.0)
 		[/if]

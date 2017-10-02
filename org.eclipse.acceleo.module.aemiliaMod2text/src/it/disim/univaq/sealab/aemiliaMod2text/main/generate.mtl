@@ -232,7 +232,7 @@ array([generateData(e.oclAsType(Array).length)/], [generateData(e.oclAsType(Arra
 ERROR : The length must be greater than zero
 [/if]
 [/if]
-[comment rivedere in futuro i tipi di dato Array (soprattutto questo è da gestire ancora), Lista e Record (mai usati e quindi in dubbio)/]
+[comment rivedere in futuro i tipi di dato Array (soprattutto questo Ã¨ da gestire ancora), Lista e Record (mai usati e quindi in dubbio)/]
 [/template]
 
 [comment serve a controllare il tipo di process_term e reagire di conseguenza/]

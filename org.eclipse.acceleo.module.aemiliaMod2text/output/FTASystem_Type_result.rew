@@ -37,7 +37,7 @@
 				ENABLED (LFTA.outLFTA2) ->STATE_REWARD(1.0);
 
 		MEASURE NetHi_Type_Single_throughtput_NETH_outNetH1 IS ENABLED (NETH.outNetH1) ->TRANS_REWARD(1.0);
-		MEASURE NetHi_Type_Single_utilization_NETH_outNetH1 IS ENABLED (NETH.outNetH1) ->STATE_REWARD(1.0);	
+		MEASURE NetHi_Type_Single_utilization_NETH_outNetH1 IS ENABLED (NETH.outNetH1) ->STATE_REWARD(1.0)
 
 		MEASURE NetHi_Type_Single_throughtput_NETH_outNetH2 IS ENABLED (NETH.outNetH2) ->TRANS_REWARD(1.0);
 		MEASURE NetHi_Type_Single_utilization_NETH_outNetH2 IS ENABLED (NETH.outNetH2) ->STATE_REWARD(1.0);	
@@ -46,5 +46,5 @@
 				ENABLED (NETH.outNetH2) ->TRANS_REWARD(1.0);
 		MEASURE NetHi_Type_Multiple_utilization_NETH IS 
 				ENABLED (NETH.outNetH1) ->STATE_REWARD(1.0)
-				ENABLED (NETH.outNetH2) ->STATE_REWARD(1.0);
+				ENABLED (NETH.outNetH2) ->STATE_REWARD(1.0)
 		

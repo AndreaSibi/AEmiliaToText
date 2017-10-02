@@ -51,5 +51,5 @@
 		MEASURE NetDownTT_Type_Single_utilization_WT_forward IS ENABLED (WT.forward) ->STATE_REWARD(1.0);
 
 		MEASURE NetUpTT_Type_Single_throughtput_TW_forward IS ENABLED (TW.forward) ->TRANS_REWARD(1.0);
-		MEASURE NetUpTT_Type_Single_utilization_TW_forward IS ENABLED (TW.forward) ->STATE_REWARD(1.0);	
+		MEASURE NetUpTT_Type_Single_utilization_TW_forward IS ENABLED (TW.forward) ->STATE_REWARD(1.0)
 		
